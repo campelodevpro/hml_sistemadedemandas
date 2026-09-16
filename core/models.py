@@ -43,13 +43,25 @@ class Profile(models.Model):
     role = models.CharField(
         max_length=20, choices=ROLE_CHOICES, default=ROLE_RESPONSIBLE
     )
-    unit = models.ForeignKey(
-        Unit, on_delete=models.PROTECT, null=True, blank=True, related_name="profiles"
+    member_sectors = models.ManyToManyField(
+        Sector,
+        blank=True,
+        related_name="member_profiles",
+        verbose_name="setores membro",
     )
-    sector = models.ForeignKey(
-        Sector, on_delete=models.PROTECT, null=True, blank=True, related_name="profiles"
+    managed_sectors = models.ManyToManyField(
+        Sector,
+        blank=True,
+        related_name="manager_profiles",
+        verbose_name="setores gerenciados",
     )
     technical_level = models.CharField(max_length=40, blank=True)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.role == self.ROLE_ADMIN and not self.user.is_staff:
+            self.user.is_staff = True
+            self.user.save(update_fields=["is_staff"])
 
     def __str__(self):
         return f"{self.user.get_full_name() or self.user.email} ({self.get_role_display()})"
@@ -122,7 +134,9 @@ class Task(models.Model):
         blank=True,
         related_name="assigned_tasks",
     )
-    unit = models.ForeignKey(Unit, on_delete=models.PROTECT, related_name="tasks")
+    unit = models.ForeignKey(
+        Unit, on_delete=models.PROTECT, null=True, blank=True, related_name="tasks"
+    )
     sector = models.ForeignKey(
         Sector, on_delete=models.PROTECT, null=True, blank=True, related_name="tasks"
     )

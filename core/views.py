@@ -1,30 +1,50 @@
 from datetime import timedelta
 
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods
 
 from .forms import TaskForm
-from .models import Profile, Task
+from .models import Profile, Sector, Task
 
 
 def profile_for(user):
     return getattr(user, "profile", None)
 
 
+def accessible_sectors(user):
+    profile = profile_for(user)
+    if user.is_superuser or (profile and profile.role == Profile.ROLE_ADMIN):
+        return Sector.objects.all()
+    if not profile:
+        return Sector.objects.none()
+    return Sector.objects.filter(
+        Q(member_profiles=profile) | Q(manager_profiles=profile)
+    ).distinct()
+
+
+def manageable_sectors(user):
+    profile = profile_for(user)
+    if user.is_superuser or (profile and profile.role == Profile.ROLE_ADMIN):
+        return Sector.objects.all()
+    if profile and profile.role == Profile.ROLE_MANAGER:
+        return profile.managed_sectors.all()
+    return Sector.objects.none()
+
+
 def scoped_tasks(user):
     profile = profile_for(user)
     if user.is_superuser or (profile and profile.role == Profile.ROLE_ADMIN):
         return Task.objects.all()
-    if not profile or not profile.unit_id:
-        return Task.objects.filter(Q(creator=user) | Q(assignee=user))
-    scope = Q(unit_id=profile.unit_id)
-    if profile.sector_id:
-        scope &= Q(sector_id=profile.sector_id)
-    return Task.objects.filter(scope)
+    return Task.objects.filter(
+        Q(sector__in=accessible_sectors(user))
+        | Q(status=Task.STATUS_DRAFT, creator=user)
+    ).distinct()
 
 
 def risk_for(task):
@@ -77,6 +97,7 @@ def board(request):
         "in_progress": sum(task.status == Task.STATUS_IN_PROGRESS for task in tasks),
         "overdue": sum(risk_for(task) == "red" for task in tasks),
         "profile": profile_for(request.user),
+        "manageable_sectors": manageable_sectors(request.user),
     }
     return render(request, "core/board.html", context)
 
@@ -84,19 +105,13 @@ def board(request):
 @login_required
 @require_http_methods(["GET", "POST"])
 def task_create(request):
-    form = TaskForm(request.POST or None)
+    form = TaskForm(
+        request.POST or None, allowed_sectors=accessible_sectors(request.user)
+    )
     if request.method == "POST" and form.is_valid():
-        profile = profile_for(request.user)
-        if not profile or not profile.unit_id:
-            messages.error(
-                request, "Seu usuario ainda nao esta vinculado a uma unidade."
-            )
-            return render(request, "core/task_form.html", {"form": form})
         task = form.save(commit=False)
         task.creator = request.user
-        task.unit_id = profile.unit_id
-        if not task.sector_id:
-            task.sector_id = profile.sector_id
+        task.unit = task.sector.unit if task.sector_id else None
         task.save()
         messages.success(request, "Demanda salva com sucesso.")
         return redirect("board")
@@ -113,3 +128,34 @@ def task_detail(request, pk):
     ):
         return redirect("board")
     return render(request, "core/task_detail.html", {"task": task})
+
+
+@login_required
+@require_http_methods(["GET", "POST"])
+def team_manage(request, pk):
+    sector = get_object_or_404(Sector.objects.select_related("unit"), pk=pk)
+    if not manageable_sectors(request.user).filter(pk=sector.pk).exists():
+        raise PermissionDenied
+    if request.method == "POST":
+        member_id = request.POST.get("member_id")
+        action = request.POST.get("action")
+        user = get_object_or_404(get_user_model(), pk=member_id)
+        if action == "add":
+            profile, _ = Profile.objects.get_or_create(user=user)
+            sector.member_profiles.add(profile)
+            messages.success(request, "Colaborador adicionado a equipe.")
+        elif action == "remove":
+            sector.member_profiles.filter(user=user).delete()
+            messages.success(request, "Colaborador removido da equipe.")
+        return redirect("team_manage", pk=sector.pk)
+    members = sector.member_profiles.select_related("user").order_by("user__email")
+    available_users = (
+        get_user_model()
+        .objects.exclude(profile__in=sector.member_profiles.all())
+        .order_by("email")
+    )
+    return render(
+        request,
+        "core/team_manage.html",
+        {"sector": sector, "members": members, "available_users": available_users},
+    )

@@ -4,10 +4,11 @@
 
 | Entidade | Finalidade |
 |---|---|
-| usuario | Identidade, perfil, unidade, setor e gerente |
+| usuario | Identidade e perfil de acesso |
 | unidade | Limite organizacional de acesso |
 | setor | Grupo de trabalho dentro da unidade |
-| equipe | Conjunto de colaboradores gerenciado |
+| participacao_setor | Relacao entre pessoa e um ou mais setores em que participa |
+| gerencia_setor | Relacao entre gerente e um ou mais setores sob sua gestao |
 | projeto | Objetivo, contexto, impacto, prioridade e prazos |
 | demanda | Necessidade de trabalho, podendo estar solta ou ligada a projeto |
 | tarefa | Trabalho executavel com etapa, responsavel e prazo |
@@ -23,8 +24,9 @@
 | usuario.nome_completo | texto | PII basica | Convite e cadastro | Obrigatorio, tamanho limitado |
 | usuario.email | texto | PII basica | Convite | Obrigatorio, formato e unicidade |
 | usuario.perfil | enumeracao | Organizacional | Administrador ou gerente | Valor permitido |
-| usuario.unidade_id | identificador | Organizacional | Administrador ou gerente | Unidade existente |
-| usuario.setor_id | identificador | Organizacional | Administrador ou gerente | Setor compatível |
+| setor.unidade_id | identificador | Organizacional | Administrador | Unidade existente |
+| perfil.setores_membro | relacao multipla | Organizacional | Administrador ou gerente autorizado | Setores existentes |
+| perfil.setores_gerenciados | relacao multipla | Organizacional | Administrador | Setores existentes |
 | usuario.nivel_tecnico | enumeracao | Desempenho potencial | Usuario autorizado | Valores definidos em spec |
 | projeto.contexto | texto | Negocio | Usuario autorizado | Tamanho limitado |
 | projeto.impacto | enumeracao | Negocio | Usuario autorizado | Valores definidos em spec |

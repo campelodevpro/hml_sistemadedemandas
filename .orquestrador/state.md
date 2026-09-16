@@ -123,3 +123,4 @@
 - Implementacao T001 iniciada: autenticacao, modelos de unidade, setor, perfil, projeto e tarefa, cadastro de demanda, rascunho privado, semaforo e quadro responsivo.
 - Verificacoes aprovadas em 2026-09-16: Django check, 3 testes pytest, Ruff, Black, mypy e login HTTP local com status 200.
 - T001 ainda em andamento: faltam movimentacao de tarefas, edicao, auditoria e campos obrigatorios finais.
+- Checkpoint 2026-09-16: primeira fatia validada, commit 958b98d enviado para origin/main.

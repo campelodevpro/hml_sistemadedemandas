@@ -4,7 +4,7 @@ O backlog abaixo e uma proposta para aprovacao do MVP. Nenhum ticket deve ser co
 
 | ID | Titulo | Prioridade | Regra | Tamanho | Dependencias | Status |
 |---|---|---|---|---|---|---|
-| T001 | Quadro de tarefas e ciclo de vida | 1 | RN-001, RN-002, RN-005 | G | T002 | Proposto |
+| T001 | Quadro de tarefas e ciclo de vida | 1 | RN-001, RN-002, RN-005 | G | T002 | Em andamento |
 | T002 | Usuarios, perfis, unidades e setores | 2 | RN-006 | G | Nenhuma | Proposto |
 | T003 | Painel de indicadores e semaforo | 3 | RN-003, RN-004 | G | T001, T002 | Proposto |
 | T004 | Capacidade, horas e nivel tecnico | 4 | RN-007 | G | T002 | Proposto |

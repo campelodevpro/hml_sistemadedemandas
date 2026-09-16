@@ -10,12 +10,12 @@ RN-001, RN-002 e RN-005.
 
 ## Criterios de aceite
 
-- [ ] Demanda completa entra no backlog por padrao.
-- [ ] Demanda completa pode iniciar em uma etapa escolhida.
-- [ ] Demanda incompleta pode ser salva como rascunho.
-- [ ] Rascunho exibe campos faltantes e fica privado para o criador.
-- [ ] Demanda completa aparece no quadro oficial.
-- [ ] O quadro mostra responsavel, prazo, status e prioridade.
+- [x] Demanda completa entra no backlog por padrao.
+- [x] Demanda completa pode iniciar em uma etapa escolhida.
+- [x] Demanda incompleta pode ser salva como rascunho.
+- [x] Rascunho exibe campos faltantes e fica privado para o criador.
+- [x] Demanda completa aparece no quadro oficial.
+- [x] O quadro mostra responsavel, prazo, status e prioridade.
 - [ ] O sistema evita sobrescrever uma edicao concorrente.
 
 ## Cenarios BDD

@@ -1,7 +1,7 @@
 # RESUMO COMPACTO (ler primeiro)
 - Projeto: Portal de gestao da UTIC | Perfil: Co-piloto | Harness: Medio | Cobertura: REFORCADO | Fase: implementacao
-- Ticket atual: T002 bloqueado | Proximo passo: aguardar definicao completa de usuarios, equipes, unidades e setores | ORQUESTRADOR: v5
-- Riscos e dividas abertas: T002 sem Definition of Ready; convite por e-mail, equipes, importacao de planilha, Gantt e indicadores completos permanecem pendentes
+- Ticket atual: T001 | Proximo passo: concluir movimentacao, edicao, auditoria e concorrencia das tarefas | ORQUESTRADOR: v5
+- Riscos e dividas abertas: convite por e-mail, importacao de planilha, Gantt e indicadores completos permanecem pendentes
 
 ---
 # DETALHE COMPLETO
@@ -13,7 +13,7 @@
 - Capacidades E1-E6 ativas: E1.1, E1.3, E2.3, E2.4, E3.1, E3.2 se houver integracao, E5.2, E5.3, E6.1 completo, E6.2, E6.3, E6.4 responsivo e offline parcial
 - Stack confirmada: Python com Django, PostgreSQL, Django Templates, HTMX, Bootstrap 5, JavaScript somente quando necessario, monolito modular, Django Authentication, Django ORM, pytest, pytest-django, Ruff, Black e mypy; execucao inicial em Windows e localhost.
 - Autenticacao: e-mail unico e senha; banco local recriado em 2026-09-16 antes de receber dados reais.
-- Backlog 2026-09-16: T002 bloqueado por ausencia de objetivo, escopo, fora de escopo, exemplos e criterios de aceite. T001 e os tickets T003 a T006 dependem direta ou indiretamente de T002; nao ha ticket elegivel sem dependencia pendente.
+- Backlog 2026-09-16: T002 concluido. Implementadas participacao e gerencia independentes em varios setores, visibilidade de tarefas por setor, tela de equipe e preservacao de dados na migracao. As cinco validacoes passaram, com 9 testes.
 
 ## Regras de negocio-chave
 - O administrador configura usuarios, perfis, equipes, unidades, parametros, mensagens, alertas e regras do sistema.

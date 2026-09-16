@@ -1,0 +1,5 @@
+{% extends 'base.html' %}
+{% block title %}{{ task.title }} | Sismon{% endblock %}
+{% block content %}
+<a href="{% url 'board' %}" class="text-decoration-none">Voltar ao quadro</a><div class="card app-card p-4 mt-3"><div class="d-flex justify-content-between gap-3"><div><p class="eyebrow mb-1">{{ task.status }}</p><h1 class="h3">{{ task.title }}</h1></div><span class="badge text-bg-light align-self-start">{{ task.priority }}</span></div>{% if task.description %}<p class="mt-3">{{ task.description }}</p>{% endif %}<div class="row g-3 mt-2"><div class="col-md-4"><span class="text-muted small d-block">Responsavel</span>{{ task.assignee.get_full_name|default:'Nao definido' }}</div><div class="col-md-4"><span class="text-muted small d-block">Prazo</span>{{ task.due_date|date:'d/m/Y'|default:'Nao definido' }}</div><div class="col-md-4"><span class="text-muted small d-block">Setor</span>{{ task.sector.name|default:'Nao definido' }}</div></div></div>
+{% endblock %}

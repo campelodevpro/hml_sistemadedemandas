@@ -1,0 +1,25 @@
+[project]
+name = 'sismon'
+version = '0.1.0'
+description = 'Portal de monitoramento de demandas e capacidade da UTIC'
+requires-python = '>=3.12'
+dependencies = ['Django==6.1.1', 'psycopg[binary]==3.3.5']
+
+[project.optional-dependencies]
+test = ['pytest==9.1.1', 'pytest-django==4.14.0']
+quality = ['ruff==0.16.7', 'black==26.5.1', 'mypy==2.3.1', 'django-stubs==6.1.1']
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = 'sismon_project.settings'
+python_files = ['test_*.py', '*_test.py']
+testpaths = ['tests']
+
+[tool.ruff.lint]
+extend-ignore = ['RUF012']
+
+[tool.mypy]
+plugins = ['mypy_django_plugin.main']
+ignore_missing_imports = true
+
+[tool.django-stubs]
+django_settings_module = 'sismon_project.settings'

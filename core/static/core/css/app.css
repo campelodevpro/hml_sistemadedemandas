@@ -1,0 +1,19 @@
+:root { --blue-soft: #dcecf7; --blue-main: #4388b5; --ink: #243447; --surface: #f7fbfd; }
+body { background: var(--surface); color: var(--ink); }
+.app-nav { background: var(--blue-soft); min-height: 64px; }
+.app-card, .metric-card, .board-column { border: 1px solid #e1edf3; border-radius: 16px; background: #fff; box-shadow: 0 8px 24px rgba(54, 91, 111, .06); }
+.app-card { box-shadow: 0 12px 30px rgba(54, 91, 111, .09); }
+.eyebrow { color: var(--blue-main); font-size: .72rem; font-weight: 700; letter-spacing: .1em; }
+.metric-card { padding: 18px; min-height: 104px; display: flex; flex-direction: column; justify-content: space-between; }
+.metric-card span { color: #6d8290; font-size: .85rem; } .metric-card strong { font-size: 1.8rem; } .metric-small { font-size: 1rem !important; }
+.board-grid { display: grid; grid-template-columns: repeat(4, minmax(240px, 1fr)); gap: 16px; overflow-x: auto; padding-bottom: 12px; }
+.board-column { padding: 16px; min-height: 350px; background: #eef6fa; }
+.count-pill { background: #d3e7f1; border-radius: 999px; padding: 2px 9px; font-size: .75rem; }
+.task-card { display: block; color: inherit; text-decoration: none; background: #fff; border-radius: 13px; padding: 15px; margin-bottom: 12px; border-left: 4px solid #82bdd8; transition: transform .18s ease, box-shadow .18s ease; }
+.task-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(54, 91, 111, .12); }
+.task-card h3 { font-size: .96rem; margin: 10px 0 3px; line-height: 1.35; }
+.risk-yellow { border-left-color: #f1c75b; } .risk-red { border-left-color: #e66b6b; } .risk-green { border-left-color: #63b894; }
+.priority-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #9aaab3; } .priority-high, .priority-max { background: #e66b6b; } .priority-medium { background: #f1c75b; } .priority-low { background: #63b894; }
+.empty-column { color: #7a8d97; font-size: .86rem; padding: 24px 8px; text-align: center; }
+@media (max-width: 900px) { .board-grid { grid-template-columns: repeat(4, minmax(220px, 1fr)); } }
+@media (max-width: 576px) { .board-grid { grid-template-columns: repeat(4, minmax(190px, 1fr)); } .container-fluid { padding-left: 16px !important; padding-right: 16px !important; } }

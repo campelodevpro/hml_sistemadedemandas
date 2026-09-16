@@ -4,7 +4,7 @@ Portal para monitorar demandas, projetos, tarefas, horas e capacidade de execuca
 
 ## Situacao atual
 
-Esta pasta contem a base documental do projeto. A implementacao sera iniciada somente depois da aprovacao do MVP, do backlog e da Definition of Ready.
+O primeiro quadro visual de tarefas esta em desenvolvimento. O acesso usa e-mail e senha; a criacao de usuarios e equipes sera ampliada nas proximas etapas.
 
 ## Objetivos da primeira versao
 
@@ -15,4 +15,14 @@ Esta pasta contem a base documental do projeto. A implementacao sera iniciada so
 
 ## Stack escolhida
 
-Python e PostgreSQL. A tecnologia visual ainda sera definida em ADR antes do desenvolvimento.
+Python com Django, PostgreSQL como banco oficial, Django Templates, HTMX e Bootstrap 5. Em localhost, sem `DATABASE_URL`, o projeto usa SQLite apenas para desenvolvimento.
+
+## Primeiro acesso local
+
+Depois de executar as migracoes, crie o administrador com:
+
+```powershell
+.\.venv\Scripts\python.exe manage.py createsuperuser
+```
+
+Informe um e-mail e uma senha. Esse e-mail sera usado para entrar no Sismon.

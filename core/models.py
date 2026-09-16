@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 
 
@@ -37,7 +37,9 @@ class Profile(models.Model):
         (ROLE_MANAGER, "Gerente"),
         (ROLE_RESPONSIBLE, "Responsavel"),
     ]
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile"
+    )
     role = models.CharField(
         max_length=20, choices=ROLE_CHOICES, default=ROLE_RESPONSIBLE
     )
@@ -50,7 +52,7 @@ class Profile(models.Model):
     technical_level = models.CharField(max_length=40, blank=True)
 
     def __str__(self):
-        return f"{self.user.get_full_name() or self.user.username} ({self.get_role_display()})"
+        return f"{self.user.get_full_name() or self.user.email} ({self.get_role_display()})"
 
 
 class Project(models.Model):
@@ -73,7 +75,9 @@ class Project(models.Model):
     start_date = models.DateField(null=True, blank=True)
     due_date = models.DateField(null=True, blank=True)
     created_by = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name="created_projects"
+        settings.AUTH_USER_MODEL,
+        on_delete=models.PROTECT,
+        related_name="created_projects",
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -109,10 +113,10 @@ class Task(models.Model):
         Project, on_delete=models.SET_NULL, null=True, blank=True, related_name="tasks"
     )
     creator = models.ForeignKey(
-        User, on_delete=models.PROTECT, related_name="created_tasks"
+        settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="created_tasks"
     )
     assignee = models.ForeignKey(
-        User,
+        settings.AUTH_USER_MODEL,
         on_delete=models.PROTECT,
         null=True,
         blank=True,

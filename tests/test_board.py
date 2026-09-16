@@ -1,13 +1,17 @@
 import pytest
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 
 from core.models import Profile, Sector, Task, Unit
 
+User = get_user_model()
+
 
 @pytest.fixture
 def user_with_scope(db):
-    user = User.objects.create_user(username="leonardo", password="senha-segura-123")
+    user = User.objects.create_user(
+        email="leonardo@example.test", password="senha-segura-123"
+    )
     unit = Unit.objects.create(name="UTIC")
     sector = Sector.objects.create(unit=unit, name="Sistemas")
     Profile.objects.create(
@@ -52,7 +56,9 @@ def test_incomplete_task_can_be_saved_as_private_draft(client, user_with_scope):
 @pytest.mark.django_db
 def test_complete_task_can_start_directly_in_progress(client, user_with_scope):
     user, _, _ = user_with_scope
-    assignee = User.objects.create_user(username="carlos", password="senha-segura-123")
+    assignee = User.objects.create_user(
+        email="carlos@example.test", password="senha-segura-123"
+    )
     client.force_login(user)
     response = client.post(
         reverse("task_create"),
@@ -69,3 +75,21 @@ def test_complete_task_can_start_directly_in_progress(client, user_with_scope):
         Task.objects.get(title__startswith="Criacao dos scripts").status
         == Task.STATUS_IN_PROGRESS
     )
+
+
+@pytest.mark.django_db
+def test_login_accepts_email(client, user_with_scope):
+    user, _, _ = user_with_scope
+
+    response = client.post(
+        reverse("login"),
+        {"username": user.email, "password": "senha-segura-123"},
+    )
+
+    assert response.status_code == 302
+    assert client.session.get("_auth_user_id") == str(user.id)
+
+
+def test_user_uses_unique_email_as_login_identifier():
+    assert User.USERNAME_FIELD == "email"
+    assert User._meta.get_field("email").unique is True

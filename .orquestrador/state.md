@@ -1,17 +1,18 @@
 # RESUMO COMPACTO (ler primeiro)
 - Projeto: Portal de gestao da UTIC | Perfil: Co-piloto | Harness: Medio | Cobertura: REFORCADO | Fase: implementacao
-- Ticket atual: T001 | Proximo passo: executar testes do quadro de tarefas | ORQUESTRADOR: v5
-- Riscos e dividas abertas: ainda nao levantados
+- Ticket atual: T001 | Proximo passo: concluir movimentacao e edicao das tarefas | ORQUESTRADOR: v5
+- Riscos e dividas abertas: convite por e-mail, equipes, importacao de planilha, Gantt e indicadores completos permanecem pendentes
 
 ---
 # DETALHE COMPLETO
-- Ultima atualizacao: 2026-09-15
+- Ultima atualizacao: 2026-09-16
 - Modo: teste rapido com possibilidade de crescimento
 - Plataforma / Stack: Django, PostgreSQL, Django Templates, HTMX, Bootstrap 5, JavaScript minimo, monolito modular, Django ORM, Windows e localhost
 - Dados pessoais tratados: a definir
 - Pilares ativos: 1, 2, 3, 4, 5, 6, 9, 14, 15, 16, 17, 18, 19; 7 por uso em celular
 - Capacidades E1-E6 ativas: E1.1, E1.3, E2.3, E2.4, E3.1, E3.2 se houver integracao, E5.2, E5.3, E6.1 completo, E6.2, E6.3, E6.4 responsivo e offline parcial
 - Stack confirmada: Python com Django, PostgreSQL, Django Templates, HTMX, Bootstrap 5, JavaScript somente quando necessario, monolito modular, Django Authentication, Django ORM, pytest, pytest-django, Ruff, Black e mypy; execucao inicial em Windows e localhost.
+- Autenticacao: e-mail unico e senha; banco local recriado em 2026-09-16 antes de receber dados reais.
 
 ## Regras de negocio-chave
 - O administrador configura usuarios, perfis, equipes, unidades, parametros, mensagens, alertas e regras do sistema.

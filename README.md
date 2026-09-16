@@ -1,6 +1,6 @@
 # Sismon
 
-Portal para monitorar demandas, projetos, tarefas, horas e capacidade de execucao da UTIC.
+Portal para monitorar demandas, projetos, tarefas, horas e capacidade de execucao do TIME.
 
 ## Situacao atual
 

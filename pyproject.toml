@@ -3,7 +3,7 @@ name = 'sismon'
 version = '0.1.0'
 description = 'Portal de monitoramento de demandas e capacidade da UTIC'
 requires-python = '>=3.12'
-dependencies = ['Django==6.1.1', 'psycopg[binary]==3.3.5']
+dependencies = ['Django==6.1.1', 'psycopg[binary]==3.3.6']
 
 [project.optional-dependencies]
 test = ['pytest==9.1.1', 'pytest-django==4.14.0']
